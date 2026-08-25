@@ -4,62 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OpenBoard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <header>
         <h1>OpenBoard</h1>
-        <a href="">Entrar</a>
-        <button>Publicar vaga $299</button>
+        <div>
+            <a href="">Entrar</a>
+            <button class="btn">Publicar vaga $299</button>
+        </div>
     </header>
 
-    <section>
+    <section class="hero">
         <h2>As melhores vagas em startups de tecnologia</h2>
         <p>Encontre oportunidades reais em empresas curadas. Sem cadastro, sem barreiras.</p>
-        <button>Publicar vaga $299</button>
+        <button class="btn">Publicar vaga $299</button>
     </section>
 
-    <main>
-        <section>
-            <h2>Últimas Vagas</h2>
-            <span>7 vagas - Atualizado agora</span>
+    <main class="conteudo">
+        <section class="vagas">
 
-            <div>
-                <small>Vercel</small>
-                <img src="" alt="logo">
-                <p>Full-stack Engineer</p>
-                <span>R$ 20k-30k</span>
-                <span>Remoto</span>
-                <span>4h</span>
-                <a href="">Candidatar-se</a>
+            <div class="vagas__header">
+                <h2>Últimas Vagas</h2>
+                <span>7 vagas - Atualizado agora</span>
             </div>
 
-            <div>
-                <small>Vercel</small>
+            <div class="vagas__card">
                 <img src="" alt="logo">
-                <p>Full-stack Engineer</p>
-                <span>R$ 20k-30k</span>
-                <span>Remoto</span>
-                <span>4h</span>
-                <a href="">Candidatar-se</a>
+                <div>
+                    <small>Vercel</small>
+                    <p>Full-stack Engineer</p>
+                    <span>R$ 20k-30k</span>
+                    <span>Remoto</span>
+                </div>
+                <div>
+                    <span>4h</span>
+                    <a href="">Candidatar-se</a>
+                </div>
             </div>
 
-            <div>
-                <small>Vercel</small>
-                <img src="" alt="logo">
-                <p>Full-stack Engineer</p>
-                <span>R$ 20k-30k</span>
-                <span>Remoto</span>
-                <span>4h</span>
-                <a href="">Candidatar-se</a>
-            </div>
 
         </section>
-        <aside>
-            <h3>Filtros</h3>
-            <a href="">limpar</a>
+        <aside class="filtros">
+            <div class="filtros__header">
+                <h3>Filtros</h3>
+                <a href="">limpar</a>
+            </div>
 
-            <div>
+            <div class="filtros__itens">
                 <p>Tipo de vaga</p>
                 <label for="check_efetivo">
                     <input type="checkbox" name="check_efetivo" id="check_efetivo"> Efetivo
@@ -72,7 +65,7 @@
                 </label>
             </div>
 
-            <div>
+            <div class="filtros__itens">
                 <p>Área</p>
                 <label for="check_eng">
                     <input type="checkbox" name="check_eng" id="check_eng"> Engenharia
