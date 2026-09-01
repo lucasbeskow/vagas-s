@@ -7,6 +7,11 @@
 body{
     background-color: #fafaf9;
     color: #111111;
+
+    font-family: "Roboto Slab", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
 }
 
 header{
@@ -48,18 +53,66 @@ header{
 
 .vagas{
     width: 100%;
+    padding-left: 40px;
 }
 
 .vagas__header{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 40px;
 }
 
 .vagas__card{
     display: flex;
     justify-content: space-between;
+    align-items: center;
     width: 100%;
+    padding: 16px;
+    margin: 8px 0;
+    color: #999999;
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+}
 
+.vagas__avatar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    margin: 8px;
+    background-color: #333;
+    color: #ffffff;
+    border-radius: 4px;
+}
+
+.vagas__body{
+    width: 100%;
+    padding-left: 40px;
+}
+
+.vagas__title{
+    padding-bottom: 16px;
+    font-size: 32px;
+    font-weight: 600;
+    color: #333;
+}
+
+.vagas__badge{
+    padding: 4px 8px;
+    background-color: #e5e5e3;
+    border-radius: 4px;
+}
+
+.vagas__badge--highlight{
+    border: 1px solid #999999;
+}
+
+.vagas__actions{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
 }
 
 .filtros{
