@@ -96,3 +96,21 @@ let multiplicar = (a, b) => a*b;
 console.log(multiplicar(5,10));
 
 
+
+const botao = document.getElementById('btn-hero');
+
+console.log(botao.textContent);
+
+botao.addEventListener('click', () => {
+    alert('[Alert] cliquei no botao!!!')
+    console.log('cliquei no botao!!!');
+} )
+
+const link = document.getElementById('link-google');
+
+link.addEventListener('click', (event) => {
+    alert('não vou!!!')
+    event.preventDefault();
+})
+
+
