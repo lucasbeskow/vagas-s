@@ -1,0 +1,42 @@
+[
+   {
+      "id":1,
+      "empresa":"Lumen",
+      "cargo":"Full-stack Engineer",
+      "salario":"R$ 20k-30k",
+      "modelo":"Remoto",
+      "tipo":"Efetivo",
+      "area":"Engenharia",
+      "publicada":"4h"
+   },
+   {
+      "id":2,
+      "empresa":"Satc",
+      "cargo":"Front-end Engineer",
+      "salario":"R$ 20k-30k",
+      "modelo":"Remoto",
+      "tipo":"Efetivo",
+      "area":"Engenharia",
+      "publicada":"2h"
+   },
+   {
+      "id":3,
+      "empresa":"Google",
+      "cargo":"Analista de dados",
+      "salario":"R$ 20k-30k",
+      "modelo":"Remoto",
+      "tipo":"Efetivo",
+      "area":"Dados",
+      "publicada":"6h"
+   },
+   {
+      "id":4,
+      "empresa":"Microsoft",
+      "cargo":"Analista de sistemas",
+      "salario":"R$ 20k-30k",
+      "modelo":"Remoto",
+      "tipo":"Efetivo",
+      "area":"Dados",
+      "publicada":"6h"
+   }
+]
