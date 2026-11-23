@@ -11,7 +11,9 @@ A regra de ouro do projeto para código e escrita é:
 > **Código técnico em Inglês, Conteúdo visual para o usuário em Português.**
 
 ### 1.1 Código (Strictly English)
+
 Todos os identificadores no código devem ser escritos obrigatoriamente em **inglês**, incluindo:
+
 - **Componentes**: `Jobs`, `Header`, `Hero`, `Testimonials`, `Newsletter`, `Footer`, `Button`, `Layout`, etc.
 - **Funções e Métodos**: `toggleType`, `toggleArea`, `clearFilters`, `handleApply`, `handleSubmit`, `handleLoginClick`.
 - **Hooks e Estados**: `selectedTypes`, `selectedAreas`, `isPending`, `startTransition`, `email`, `subscribed`, `error`.
@@ -20,16 +22,21 @@ Todos os identificadores no código devem ser escritos obrigatoriamente em **ing
 - **Arquivos e Pastas**: `Jobs.tsx`, `Newsletter.tsx`, `Testimonials.tsx`, `Home.tsx`.
 
 ### 1.2 Convenções de Caixa (Casing)
+
 - **Componentes e Tipos/Interfaces**: `PascalCase` (`Jobs.tsx`, `interface Job`).
 - **Funções, Métodos, Variáveis e Hooks**: `camelCase` (`toggleType`, `clearFilters`, `hasActiveFilters`).
 - **Constantes Globais/Módulo**: `UPPER_SNAKE_CASE` (`INITIAL_JOBS`, `AREA_OPTIONS`, `AREA_COUNTS`).
 - **Diretórios**: `kebab-case` ou `camelCase` minúsculo (`components/`, `pages/`, `ui/`).
 
 ### 1.3 Conteúdo do Usuário (UI / Copy em Português)
+
 - Textos visíveis na tela, botões, labels, mensagens de sucesso, mensagens de erro e atributos acessíveis destinados ao leitor de tela (ex: `aria-label`) devem permanecer em **Português do Brasil (`pt-BR`)**.
 - Exemplo:
+
   ```tsx
-  <Button aria-label={`Candidatar-se à vaga ${job.title} na empresa ${job.company}`}>
+  <Button
+    aria-label={`Candidatar-se à vaga ${job.title} na empresa ${job.company}`}
+  >
     Candidatar-se →
   </Button>
   ```
@@ -117,6 +124,7 @@ O design do OpenBoard foge de templates genéricos e adota o conceito editorial 
    - Cada commit deve representar uma unidade lógica e independente de trabalho.
 3. **Quality Gate Obrigatório**:
    - Antes de qualquer commit, a suíte de verificação deve passar com **0 erros**:
+
      ```bash
      npm run lint && npm run build
      ```
