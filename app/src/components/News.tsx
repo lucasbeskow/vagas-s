@@ -4,47 +4,107 @@ import { Button } from "../ui/Button";
 export const News: FC = () => {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    if (!email) return;
+    const cleanEmail = email.trim();
+    if (!cleanEmail) {
+      setError("Por favor, digite seu endereço de e-mail.");
+      return;
+    }
+    if (!cleanEmail.includes("@") || !cleanEmail.includes(".")) {
+      setError("Por favor, insira um endereço de e-mail válido.");
+      return;
+    }
+    setError(null);
     setSubscribed(true);
   };
 
   return (
-    <section className="hero py-20 md:py-[100px] px-6 md:px-10 text-center flex flex-col items-center justify-center max-w-4xl mx-auto border-t border-[#e5e5e3]">
-      <h2 className="text-3xl sm:text-4xl md:text-[48px] font-bold text-[#111111] leading-tight mb-4">
-        Vagas novas, toda quinta-feira
-      </h2>
-      <p className="text-base md:text-lg text-[#555555] mb-[32px] max-w-2xl">
-        Um resumo curto das melhores vagas em startups direto no seu inbox.
-      </p>
+    <section
+      aria-labelledby="newsletter-title"
+      className="py-16 sm:py-20 border-t border-[#e2e5e9] bg-white"
+    >
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <span className="text-xs font-mono font-semibold text-[#0047ff] tracking-wide uppercase block mb-2">
+          Newsletter Curada
+        </span>
+        <h2
+          id="newsletter-title"
+          className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0e1013] tracking-tight mb-3"
+        >
+          Vagas novas, toda quinta-feira.
+        </h2>
+        <p className="text-base text-[#5f6774] mb-8 max-w-xl mx-auto font-normal">
+          Um resumo direto no seu e-mail com as melhores oportunidades abertas
+          na semana e média salarial. Sem spam.
+        </p>
 
-      <div className="cadastro w-full max-w-md mx-auto">
-        {subscribed ? (
-          <div className="p-4 bg-[#e5e5e3] rounded-lg text-sm font-medium text-[#111111] animate-fade-in">
-            ✓ Inscrição confirmada para <strong>{email}</strong>! Você receberá
-            as melhores vagas na quinta-feira.
-          </div>
-        ) : (
-          <form
-            onSubmit={handleSubmit}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full"
-          >
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="seu@mail.com"
-              required
-              className="w-full sm:flex-1 py-3 px-5 text-sm text-[#111111] bg-white border border-[#dddddd] rounded-lg focus:outline-hidden focus:border-[#111111] transition-all placeholder:text-[#999999]"
-            />
-            <Button type="submit">Assinar</Button>
-          </form>
-        )}
+        <div className="w-full max-w-md mx-auto">
+          {subscribed ? (
+            <div
+              role="status"
+              aria-live="polite"
+              className="p-4 bg-[#f1f3f5] border border-[#e2e5e9] rounded-lg text-sm text-[#0e1013]"
+            >
+              <span className="font-semibold text-[#0047ff]">
+                ✓ Inscrição confirmada
+              </span>{" "}
+              para <strong>{email}</strong>. Você receberá o próximo índice na
+              quinta-feira.
+            </div>
+          ) : (
+            <form
+              onSubmit={handleSubmit}
+              noValidate
+              className="flex flex-col items-center justify-center gap-2.5 w-full"
+            >
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2.5 w-full">
+                <label htmlFor="newsletter-email" className="sr-only">
+                  Seu e-mail profissional <span aria-hidden="true">*</span>
+                </label>
+                <input
+                  id="newsletter-email"
+                  type="email"
+                  autoComplete="email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (error) setError(null);
+                  }}
+                  aria-required="true"
+                  aria-invalid={!!error}
+                  aria-describedby={error ? "newsletter-error" : undefined}
+                  placeholder="seu@email.com"
+                  required
+                  className={`w-full sm:flex-1 py-2.5 px-3.5 text-sm text-[#0e1013] bg-[#f8f9fa] border rounded-md focus:bg-white focus:outline-2 focus:outline-[#0047ff] focus:border-transparent transition-all placeholder:text-[#5f6774]/70 ${
+                    error ? "border-red-500 bg-red-50/20" : "border-[#e2e5e9]"
+                  }`}
+                />
+                <Button
+                  type="submit"
+                  variant="cobalt"
+                  size="md"
+                  className="w-full sm:w-auto"
+                >
+                  Assinar índice
+                </Button>
+              </div>
+
+              {error && (
+                <p
+                  id="newsletter-error"
+                  role="alert"
+                  className="text-xs text-red-600 font-medium self-start sm:self-center"
+                >
+                  {error}
+                </p>
+              )}
+            </form>
+          )}
+        </div>
       </div>
     </section>
   );
 };
-
-export default News;
