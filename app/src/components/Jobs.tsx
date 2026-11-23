@@ -10,24 +10,30 @@ export interface Job {
   salary: string;
   location: string;
   timeAgo: string;
-  tipo: "efetivo" | "estagio" | "temp";
-  area: "eng" | "design" | "gestao";
+  type: "full-time" | "internship" | "contract";
+  area: "engineering" | "design" | "management";
 }
 
-export type JobTipo = Job["tipo"];
+export type JobType = Job["type"];
 export type JobArea = Job["area"];
 
-const TIPO_OPTIONS: { id: JobTipo; label: string }[] = [
-  { id: "efetivo", label: "Efetivo" },
-  { id: "estagio", label: "Estágio" },
-  { id: "temp", label: "Temporário" },
+const TYPE_OPTIONS: { id: JobType; label: string }[] = [
+  { id: "full-time", label: "Efetivo" },
+  { id: "internship", label: "Estágio" },
+  { id: "contract", label: "Temporário" },
 ];
 
 const AREA_OPTIONS: { id: JobArea; label: string }[] = [
-  { id: "eng", label: "Engenharia" },
+  { id: "engineering", label: "Engenharia" },
   { id: "design", label: "Design" },
-  { id: "gestao", label: "Gestão" },
+  { id: "management", label: "Gestão" },
 ];
+
+const TYPE_LABELS: Record<JobType, string> = {
+  "full-time": "Efetivo",
+  "internship": "Estágio",
+  "contract": "Temporário",
+};
 
 const INITIAL_JOBS: Job[] = [
   {
@@ -39,8 +45,8 @@ const INITIAL_JOBS: Job[] = [
     salary: "R$ 20k - 30k",
     location: "Remoto (Brasil)",
     timeAgo: "4h atrás",
-    tipo: "efetivo",
-    area: "eng",
+    type: "full-time",
+    area: "engineering",
   },
   {
     id: "2",
@@ -51,7 +57,7 @@ const INITIAL_JOBS: Job[] = [
     salary: "R$ 16k - 24k",
     location: "Remoto (América Latina)",
     timeAgo: "2h atrás",
-    tipo: "efetivo",
+    type: "full-time",
     area: "design",
   },
   {
@@ -63,8 +69,8 @@ const INITIAL_JOBS: Job[] = [
     salary: "R$ 9k - 14k",
     location: "Remoto ou Criciúma, SC",
     timeAgo: "1d atrás",
-    tipo: "efetivo",
-    area: "eng",
+    type: "full-time",
+    area: "engineering",
   },
   {
     id: "4",
@@ -75,8 +81,8 @@ const INITIAL_JOBS: Job[] = [
     salary: "R$ 32k - 42k",
     location: "Remoto global",
     timeAgo: "5h atrás",
-    tipo: "efetivo",
-    area: "gestao",
+    type: "full-time",
+    area: "management",
   },
   {
     id: "5",
@@ -87,8 +93,8 @@ const INITIAL_JOBS: Job[] = [
     salary: "R$ 2.5k",
     location: "Remoto",
     timeAgo: "6h atrás",
-    tipo: "estagio",
-    area: "eng",
+    type: "internship",
+    area: "engineering",
   },
   {
     id: "6",
@@ -99,7 +105,7 @@ const INITIAL_JOBS: Job[] = [
     salary: "R$ 3k",
     location: "Remoto ou São Paulo, SP",
     timeAgo: "1d atrás",
-    tipo: "estagio",
+    type: "internship",
     area: "design",
   },
   {
@@ -111,29 +117,29 @@ const INITIAL_JOBS: Job[] = [
     salary: "R$ 15k - 20k",
     location: "Remoto (Brasil)",
     timeAgo: "2d atrás",
-    tipo: "temp",
-    area: "gestao",
+    type: "contract",
+    area: "management",
   },
 ];
 
-// Pré-computa a contagem de vagas por área em nível de módulo para evitar recomputações desnecessárias
+// Precomputes the jobs count per area at module level to avoid recomputations during render
 const AREA_COUNTS: Record<JobArea, number> = INITIAL_JOBS.reduce(
   (acc, job) => {
     acc[job.area] = (acc[job.area] || 0) + 1;
     return acc;
   },
-  { eng: 0, design: 0, gestao: 0 },
+  { engineering: 0, design: 0, management: 0 },
 );
 
-export const Vagas: FC = () => {
-  const [selectedTipos, setSelectedTipos] = useState<JobTipo[]>([]);
+export const Jobs: FC = () => {
+  const [selectedTypes, setSelectedTypes] = useState<JobType[]>([]);
   const [selectedAreas, setSelectedAreas] = useState<JobArea[]>([]);
   const [isPending, startTransition] = useTransition();
 
-  const toggleTipo = (tipo: JobTipo) => {
+  const toggleType = (type: JobType) => {
     startTransition(() => {
-      setSelectedTipos((prev) =>
-        prev.includes(tipo) ? prev.filter((v) => v !== tipo) : [...prev, tipo],
+      setSelectedTypes((prev) =>
+        prev.includes(type) ? prev.filter((v) => v !== type) : [...prev, type],
       );
     });
   };
@@ -148,7 +154,7 @@ export const Vagas: FC = () => {
 
   const clearFilters = () => {
     startTransition(() => {
-      setSelectedTipos([]);
+      setSelectedTypes([]);
       setSelectedAreas([]);
     });
   };
@@ -157,30 +163,30 @@ export const Vagas: FC = () => {
     alert(`Candidatura aberta para ${job.title} na ${job.company}!`);
   };
 
-  // Regras de performance Vercel: Set lookups O(1) e saídas precoces
-  const hasTipos = selectedTipos.length > 0;
+  // Vercel performance rules: O(1) Set lookups and early exits
+  const hasTypes = selectedTypes.length > 0;
   const hasAreas = selectedAreas.length > 0;
-  const tiposSet = hasTipos ? new Set(selectedTipos) : null;
+  const typesSet = hasTypes ? new Set(selectedTypes) : null;
   const areasSet = hasAreas ? new Set(selectedAreas) : null;
 
   const filteredJobs = INITIAL_JOBS.filter((job) => {
-    if (tiposSet && !tiposSet.has(job.tipo)) return false;
+    if (typesSet && !typesSet.has(job.type)) return false;
     if (areasSet && !areasSet.has(job.area)) return false;
     return true;
   });
 
-  const hasActiveFilters = hasTipos || hasAreas;
+  const hasActiveFilters = hasTypes || hasAreas;
 
   return (
-    <section aria-labelledby="vagas-title" className="w-full">
-      {/* Header do Ledger e Controles */}
+    <section aria-labelledby="jobs-title" className="w-full">
+      {/* Ledger Header and Controls */}
       <div className="flex flex-col gap-6 mb-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[#e2e5e9]">
           <div>
             <span className="text-xs font-mono font-semibold text-[#0047ff] tracking-wide uppercase block mb-1">
               Index ao vivo
             </span>
-            <h2 id="vagas-title" className="text-2xl sm:text-3xl font-bold text-[#0e1013] tracking-tight">
+            <h2 id="jobs-title" className="text-2xl sm:text-3xl font-bold text-[#0e1013] tracking-tight">
               Oportunidades em aberto
             </h2>
           </div>
@@ -205,7 +211,7 @@ export const Vagas: FC = () => {
           </div>
         </div>
 
-        {/* Barra de Filtros com Grupos ARIA */}
+        {/* Filter Bar with ARIA Groups */}
         <div className="flex flex-wrap items-center gap-2">
           <div role="group" aria-label="Filtrar por área de atuação" className="flex flex-wrap items-center gap-2">
             <span className="text-xs font-medium text-[#5f6774] mr-1">Áreas:</span>
@@ -242,14 +248,14 @@ export const Vagas: FC = () => {
 
           <div role="group" aria-label="Filtrar por regime de contratação" className="flex flex-wrap items-center gap-2">
             <span className="text-xs font-medium text-[#5f6774] mr-1">Contrato:</span>
-            {TIPO_OPTIONS.map(({ id, label }) => {
-              const isSelected = selectedTipos.includes(id);
+            {TYPE_OPTIONS.map(({ id, label }) => {
+              const isSelected = selectedTypes.includes(id);
               return (
                 <button
                   key={id}
                   type="button"
                   aria-pressed={isSelected}
-                  onClick={() => toggleTipo(id)}
+                  onClick={() => toggleType(id)}
                   className={`px-3 py-1.5 rounded-full text-xs font-medium cursor-pointer transition-all focus-visible:outline-2 focus-visible:outline-[#0047ff] focus-visible:outline-offset-1 ${
                     isSelected
                       ? "bg-[#0047ff] text-white shadow-xs"
@@ -264,7 +270,7 @@ export const Vagas: FC = () => {
         </div>
       </div>
 
-      {/* Lista / Ledger */}
+      {/* List / Ledger */}
       {filteredJobs.length === 0 ? (
         <div role="status" className="bg-white border border-[#e2e5e9] rounded-lg p-12 text-center">
           <div
@@ -336,10 +342,10 @@ export const Vagas: FC = () => {
                       {job.location}
                     </span>
                     <span
-                      aria-label={`Tipo de contrato: ${job.tipo}`}
-                      className="text-xs text-[#5f6774] border border-[#e2e5e9] px-2 py-0.5 rounded capitalize"
+                      aria-label={`Tipo de contrato: ${TYPE_LABELS[job.type]}`}
+                      className="text-xs text-[#5f6774] border border-[#e2e5e9] px-2 py-0.5 rounded"
                     >
-                      {job.tipo}
+                      {TYPE_LABELS[job.type]}
                     </span>
                   </div>
                 </div>

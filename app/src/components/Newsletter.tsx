@@ -1,7 +1,7 @@
 import { useState, type FC, type FormEvent } from "react";
 import { Button } from "../ui/Button";
 
-export const News: FC = () => {
+export const Newsletter: FC = () => {
   const [email, setEmail] = useState("");
   const [subscribed, setSubscribed] = useState(false);
   const [error, setError] = useState<string | null>(null);

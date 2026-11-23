@@ -39,7 +39,7 @@ const TESTIMONIALS: Testimonial[] = [
   },
 ];
 
-export const Depoimentos: FC = () => {
+export const Testimonials: FC = () => {
   return (
     <section className="py-16 sm:py-20 border-t border-[#e2e5e9] bg-[#f8f9fa]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
