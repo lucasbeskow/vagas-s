@@ -13,67 +13,73 @@ const TESTIMONIALS: Testimonial[] = [
   {
     id: "1",
     quote:
-      '"Encontrei minha vaga atual scrollando num sábado. Aplicação em dois cliques."',
+      "Encontrei minha vaga atual scrollando num sábado. O salário estava no anúncio e a aplicação levou 2 minutos. Sem testes genéricos de perfil.",
     name: "Lucas Vergara",
-    role: "Frontend engineer - Betha",
+    role: "Frontend Engineer · Betha",
     avatarInitial: "LV",
-    avatarBg: "bg-[#111111]",
+    avatarBg: "bg-[#0e1013]",
   },
   {
     id: "2",
     quote:
-      '"Contratamos dois engenheiros seniores em menos de uma semana através da plataforma."',
+      "Contratamos dois engenheiros seniores em menos de uma semana. O perfil dos candidatos que chegam pelo OpenBoard tem um nível técnico muito acima da média.",
     name: "Carolina Ribeiro",
-    role: "Head of Talent - Vercel",
+    role: "Head of Talent · Vercel",
     avatarInitial: "CR",
-    avatarBg: "bg-[#333333]",
+    avatarBg: "bg-[#0047ff]",
   },
   {
     id: "3",
     quote:
-      '"Interface direta, sem burocracia e com empresas de altíssimo nível no ecossistema."',
+      "Interface direta, sem burocracia de ATS corporativo e com empresas de altíssimo nível. É a primeira aba que abro quando busco novos desafios.",
     name: "Marcos Vinícius",
-    role: "Product Designer - Nubank",
+    role: "Product Designer · Nubank",
     avatarInitial: "MV",
-    avatarBg: "bg-[#555555]",
+    avatarBg: "bg-[#820ad1]",
   },
 ];
 
 export const Depoimentos: FC = () => {
   return (
-    <section className="depoimentos flex flex-col items-center py-20 md:py-[100px] px-6 md:px-10 gap-3 border-t border-[#e5e5e3] max-w-6xl mx-auto text-center">
-      <h2 className="text-3xl md:text-5xl font-bold text-[#111111]">
-        Quem já usa o OpenBoard
-      </h2>
-      <p className="text-base md:text-lg text-[#555555] max-w-2xl">
-        Depoimentos de recrutadores e candidatos que já fecharam vaga por aqui.
-      </p>
+    <section className="py-16 sm:py-20 border-t border-[#e2e5e9] bg-[#f8f9fa]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-10 max-w-2xl">
+          <span className="text-xs font-mono font-semibold text-[#0047ff] tracking-wide uppercase block mb-1">
+            Depoimentos
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#0e1013] tracking-tight">
+            Validado por quem contrata e quem constrói.
+          </h2>
+        </div>
 
-      <div className="depoimentos__list flex flex-col md:flex-row pt-10 gap-8 w-full text-left">
-        {TESTIMONIALS.map((item) => (
-          <div
-            key={item.id}
-            className="flex flex-col justify-between p-6 bg-white border border-[#dddddd] rounded-lg flex-1 shadow-xs hover:border-[#bbbbbb] transition-all"
-          >
-            <p className="text-sm md:text-base text-[#333333] italic leading-relaxed mb-6">
-              {item.quote}
-            </p>
-            <div className="flex items-center gap-3 pt-4 border-t border-[#f0f0ee]">
-              <div
-                className={`w-10 h-10 rounded-full ${item.avatarBg} text-white font-semibold text-xs flex items-center justify-center shrink-0`}
-              >
-                {item.avatarInitial}
-              </div>
-              <div>
-                <p className="font-bold text-sm text-[#111111]">{item.name}</p>
-                <span className="text-xs text-[#777777] block">{item.role}</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {TESTIMONIALS.map((item) => (
+            <div
+              key={item.id}
+              className="flex flex-col justify-between p-6 bg-white border border-[#e2e5e9] rounded-lg shadow-xs hover:border-[#ccd2d9] transition-colors"
+            >
+              <p className="text-sm text-[#0e1013] leading-relaxed mb-6 font-normal">
+                "{item.quote}"
+              </p>
+              <div className="flex items-center gap-3 pt-4 border-t border-[#f1f3f5]">
+                <div
+                  className={`w-9 h-9 rounded-full ${item.avatarBg} text-white font-semibold text-xs flex items-center justify-center shrink-0 shadow-xs`}
+                >
+                  {item.avatarInitial}
+                </div>
+                <div className="min-w-0">
+                  <p className="font-semibold text-sm text-[#0e1013] truncate">
+                    {item.name}
+                  </p>
+                  <span className="text-xs text-[#5f6774] block truncate">
+                    {item.role}
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
 };
-
-export default Depoimentos;
