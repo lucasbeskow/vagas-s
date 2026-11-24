@@ -1,4 +1,5 @@
 import { useState, useTransition, type FC } from "react";
+import { Link } from "react-router";
 import { Button } from "../ui/Button";
 
 export interface Job {
@@ -352,6 +353,16 @@ export const Jobs: FC = () => {
               </div>
 
               <div className="flex items-center justify-between md:justify-end gap-3 pt-3 md:pt-0 border-t md:border-t-0 border-[#e2e5e9]/50 shrink-0">
+                <Link to={`/vagas/${job.id}`}>
+                  <Button
+                    size="sm"
+                    variant="cobalt"
+                    aria-label={`Ver detalhes da vaga ${job.title} na empresa ${job.company}`}
+                    className="w-full md:w-auto font-medium"
+                  >
+                    Ver vaga
+                  </Button>
+                </Link>
                 <Button
                   size="sm"
                   variant="outline"
