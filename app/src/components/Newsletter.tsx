@@ -9,14 +9,19 @@ export const Newsletter: FC = () => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const cleanEmail = email.trim();
+
     if (!cleanEmail) {
       setError("Por favor, digite seu endereço de e-mail.");
       return;
     }
-    if (!cleanEmail.includes("@") || !cleanEmail.includes(".")) {
+
+    // Validação robusta de e-mail
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(cleanEmail)) {
       setError("Por favor, insira um endereço de e-mail válido.");
       return;
     }
+
     setError(null);
     setSubscribed(true);
   };
