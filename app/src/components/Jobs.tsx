@@ -41,6 +41,7 @@ export const Jobs: FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const [isPending, startTransition] = useTransition();
 
   // Fetch jobs from API on component mount
@@ -91,6 +92,7 @@ export const Jobs: FC = () => {
     startTransition(() => {
       setSelectedTypes([]);
       setSelectedAreas([]);
+      setSearchQuery("");
     });
   };
 
@@ -101,16 +103,19 @@ export const Jobs: FC = () => {
   // Vercel performance rules: O(1) Set lookups and early exits
   const hasTypes = selectedTypes.length > 0;
   const hasAreas = selectedAreas.length > 0;
+  const hasSearch = searchQuery.trim().length > 0;
   const typesSet = hasTypes ? new Set(selectedTypes) : null;
   const areasSet = hasAreas ? new Set(selectedAreas) : null;
+  const searchLower = hasSearch ? searchQuery.trim().toLowerCase() : null;
 
   const filteredJobs = jobs.filter((job) => {
     if (typesSet && !typesSet.has(job.type)) return false;
     if (areasSet && !areasSet.has(job.area)) return false;
+    if (searchLower && !job.title.toLowerCase().includes(searchLower)) return false;
     return true;
   });
 
-  const hasActiveFilters = hasTypes || hasAreas;
+  const hasActiveFilters = hasTypes || hasAreas || hasSearch;
 
   // Compute area counts dynamically from fetched jobs
   const areaCounts: Record<JobArea, number> = jobs.reduce(
@@ -191,6 +196,55 @@ export const Jobs: FC = () => {
                 Limpar filtros
               </button>
             )}
+          </div>
+        </div>
+
+        {/* Search Bar */}
+        <div className="w-full">
+          <label htmlFor="job-search" className="sr-only">
+            Buscar vagas por cargo
+          </label>
+          <div className="relative">
+            <input
+              id="job-search"
+              type="text"
+              value={searchQuery}
+              onChange={(e) => {
+                const value = e.target.value;
+                startTransition(() => {
+                  setSearchQuery(value);
+                });
+              }}
+              placeholder="Buscar por cargo (ex: design, engineer, manager...)"
+              className="w-full py-2.5 px-4 pr-10 text-sm text-[#0e1013] bg-white border border-[#e2e5e9] rounded-lg focus:bg-white focus:outline-2 focus:outline-[#0047ff] focus:border-transparent transition-all placeholder:text-[#5f6774]/70"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5f6774] pointer-events-none"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M7 12C9.76142 12 12 9.76142 12 7C12 4.23858 9.76142 2 7 2C4.23858 2 2 4.23858 2 7C2 9.76142 4.23858 12 7 12Z"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M14 14L10.5 10.5"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
           </div>
         </div>
 
