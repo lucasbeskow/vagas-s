@@ -1,0 +1,86 @@
+[
+  {
+    "id": "1",
+    "company": "Vercel",
+    "avatarText": "V",
+    "avatarBg": "bg-[#0e1013]",
+    "title": "Full-stack Engineer",
+    "salary": "R$ 20k - 30k",
+    "location": "Remoto (Brasil)",
+    "timeAgo": "4h atrás",
+    "type": "full-time",
+    "area": "engineering"
+  },
+  {
+    "id": "2",
+    "company": "Nubank",
+    "avatarText": "N",
+    "avatarBg": "bg-[#820ad1]",
+    "title": "Senior Product Designer",
+    "salary": "R$ 16k - 24k",
+    "location": "Remoto (América Latina)",
+    "timeAgo": "2h atrás",
+    "type": "full-time",
+    "area": "design"
+  },
+  {
+    "id": "3",
+    "company": "Betha Sistemas",
+    "avatarText": "B",
+    "avatarBg": "bg-[#0072ce]",
+    "title": "Frontend Engineer (React & TypeScript)",
+    "salary": "R$ 9k - 14k",
+    "location": "Remoto ou Criciúma, SC",
+    "timeAgo": "1d atrás",
+    "type": "full-time",
+    "area": "engineering"
+  },
+  {
+    "id": "4",
+    "company": "Linear",
+    "avatarText": "L",
+    "avatarBg": "bg-[#5e6ad2]",
+    "title": "Engineering Manager (Platform)",
+    "salary": "R$ 32k - 42k",
+    "location": "Remoto global",
+    "timeAgo": "5h atrás",
+    "type": "full-time",
+    "area": "management"
+  },
+  {
+    "id": "5",
+    "company": "Rocketseat",
+    "avatarText": "R",
+    "avatarBg": "bg-[#8257e5]",
+    "title": "Estágio em Desenvolvimento Web Full-stack",
+    "salary": "R$ 2.5k",
+    "location": "Remoto",
+    "timeAgo": "6h atrás",
+    "type": "internship",
+    "area": "engineering"
+  },
+  {
+    "id": "6",
+    "company": "QuintoAndar",
+    "avatarText": "Q",
+    "avatarBg": "bg-[#003bff]",
+    "title": "Design System Intern",
+    "salary": "R$ 3k",
+    "location": "Remoto ou São Paulo, SP",
+    "timeAgo": "1d atrás",
+    "type": "internship",
+    "area": "design"
+  },
+  {
+    "id": "7",
+    "company": "Brex",
+    "avatarText": "B",
+    "avatarBg": "bg-[#e53935]",
+    "title": "Product Operations Lead (Fintech)",
+    "salary": "R$ 15k - 20k",
+    "location": "Remoto (Brasil)",
+    "timeAgo": "2d atrás",
+    "type": "contract",
+    "area": "management"
+  }
+]

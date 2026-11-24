@@ -1,4 +1,4 @@
-import { useState, useTransition, type FC } from "react";
+import { useState, useEffect, useTransition, type FC } from "react";
 import { Button } from "../ui/Button";
 
 export interface Job {
@@ -35,106 +35,41 @@ const TYPE_LABELS: Record<JobType, string> = {
   "contract": "Temporário",
 };
 
-const INITIAL_JOBS: Job[] = [
-  {
-    id: "1",
-    company: "Vercel",
-    avatarText: "V",
-    avatarBg: "bg-[#0e1013]",
-    title: "Full-stack Engineer",
-    salary: "R$ 20k - 30k",
-    location: "Remoto (Brasil)",
-    timeAgo: "4h atrás",
-    type: "full-time",
-    area: "engineering",
-  },
-  {
-    id: "2",
-    company: "Nubank",
-    avatarText: "N",
-    avatarBg: "bg-[#820ad1]",
-    title: "Senior Product Designer",
-    salary: "R$ 16k - 24k",
-    location: "Remoto (América Latina)",
-    timeAgo: "2h atrás",
-    type: "full-time",
-    area: "design",
-  },
-  {
-    id: "3",
-    company: "Betha Sistemas",
-    avatarText: "B",
-    avatarBg: "bg-[#0072ce]",
-    title: "Frontend Engineer (React & TypeScript)",
-    salary: "R$ 9k - 14k",
-    location: "Remoto ou Criciúma, SC",
-    timeAgo: "1d atrás",
-    type: "full-time",
-    area: "engineering",
-  },
-  {
-    id: "4",
-    company: "Linear",
-    avatarText: "L",
-    avatarBg: "bg-[#5e6ad2]",
-    title: "Engineering Manager (Platform)",
-    salary: "R$ 32k - 42k",
-    location: "Remoto global",
-    timeAgo: "5h atrás",
-    type: "full-time",
-    area: "management",
-  },
-  {
-    id: "5",
-    company: "Rocketseat",
-    avatarText: "R",
-    avatarBg: "bg-[#8257e5]",
-    title: "Estágio em Desenvolvimento Web Full-stack",
-    salary: "R$ 2.5k",
-    location: "Remoto",
-    timeAgo: "6h atrás",
-    type: "internship",
-    area: "engineering",
-  },
-  {
-    id: "6",
-    company: "QuintoAndar",
-    avatarText: "Q",
-    avatarBg: "bg-[#003bff]",
-    title: "Design System Intern",
-    salary: "R$ 3k",
-    location: "Remoto ou São Paulo, SP",
-    timeAgo: "1d atrás",
-    type: "internship",
-    area: "design",
-  },
-  {
-    id: "7",
-    company: "Brex",
-    avatarText: "B",
-    avatarBg: "bg-[#e53935]",
-    title: "Product Operations Lead (Fintech)",
-    salary: "R$ 15k - 20k",
-    location: "Remoto (Brasil)",
-    timeAgo: "2d atrás",
-    type: "contract",
-    area: "management",
-  },
-];
-
-// Precomputes the jobs count per area at module level to avoid recomputations during render
-const AREA_COUNTS: Record<JobArea, number> = INITIAL_JOBS.reduce(
-  (acc, job) => {
-    acc[job.area] = (acc[job.area] || 0) + 1;
-    return acc;
-  },
-  { engineering: 0, design: 0, management: 0 },
-);
-
 export const Jobs: FC = () => {
   const [selectedTypes, setSelectedTypes] = useState<JobType[]>([]);
   const [selectedAreas, setSelectedAreas] = useState<JobArea[]>([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+
+  // Fetch jobs from API on component mount
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const response = await fetch("/vagas.json");
+
+        if (!response.ok) {
+          throw new Error("Não foi possível carregar as vagas.");
+        }
+
+        const data: Job[] = await response.json();
+        setJobs(data);
+      } catch (err) {
+        setError(
+          err instanceof Error
+            ? err.message
+            : "Erro ao carregar as vagas. Tente novamente mais tarde."
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchJobs();
+  }, []);
 
   const toggleType = (type: JobType) => {
     startTransition(() => {
@@ -169,7 +104,7 @@ export const Jobs: FC = () => {
   const typesSet = hasTypes ? new Set(selectedTypes) : null;
   const areasSet = hasAreas ? new Set(selectedAreas) : null;
 
-  const filteredJobs = INITIAL_JOBS.filter((job) => {
+  const filteredJobs = jobs.filter((job) => {
     if (typesSet && !typesSet.has(job.type)) return false;
     if (areasSet && !areasSet.has(job.area)) return false;
     return true;
@@ -177,10 +112,58 @@ export const Jobs: FC = () => {
 
   const hasActiveFilters = hasTypes || hasAreas;
 
+  // Compute area counts dynamically from fetched jobs
+  const areaCounts: Record<JobArea, number> = jobs.reduce(
+    (acc, job) => {
+      acc[job.area] = (acc[job.area] || 0) + 1;
+      return acc;
+    },
+    { engineering: 0, design: 0, management: 0 },
+  );
+
   return (
     <section aria-labelledby="jobs-title" className="w-full">
+      {/* Loading State */}
+      {isLoading && (
+        <div role="status" className="bg-white border border-[#e2e5e9] rounded-lg p-12 text-center">
+          <div
+            aria-hidden="true"
+            className="w-12 h-12 rounded-full border-4 border-[#e2e5e9] border-t-[#0047ff] animate-spin mx-auto mb-4"
+          />
+          <p className="text-base font-medium text-[#0e1013]">
+            Carregando vagas disponíveis...
+          </p>
+          <p className="text-sm text-[#5f6774] mt-1">
+            Aguarde enquanto buscamos as melhores oportunidades
+          </p>
+        </div>
+      )}
+
+      {/* Error State */}
+      {error && !isLoading && (
+        <div role="alert" className="bg-white border border-red-200 rounded-lg p-12 text-center">
+          <div
+            aria-hidden="true"
+            className="w-12 h-12 rounded-full bg-red-50 text-red-600 flex items-center justify-center mx-auto mb-4 text-2xl font-bold"
+          >
+            !
+          </div>
+          <h3 className="text-base font-semibold text-[#0e1013] mb-2">
+            Erro ao carregar vagas
+          </h3>
+          <p className="text-sm text-[#5f6774] mb-4 max-w-md mx-auto">
+            {error}
+          </p>
+          <p className="text-xs text-[#5f6774]">
+            O restante da página continua funcionando normalmente.
+          </p>
+        </div>
+      )}
+
       {/* Ledger Header and Controls */}
-      <div className="flex flex-col gap-6 mb-8">
+      {!isLoading && !error && (
+        <>
+          <div className="flex flex-col gap-6 mb-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 border-b border-[#e2e5e9]">
           <div>
             <span className="text-xs font-mono font-semibold text-[#0047ff] tracking-wide uppercase block mb-1">
@@ -217,7 +200,7 @@ export const Jobs: FC = () => {
             <span className="text-xs font-medium text-[#5f6774] mr-1">Áreas:</span>
             {AREA_OPTIONS.map(({ id, label }) => {
               const isSelected = selectedAreas.includes(id);
-              const count = AREA_COUNTS[id];
+              const count = areaCounts[id];
               return (
                 <button
                   key={id}
@@ -366,6 +349,8 @@ export const Jobs: FC = () => {
             </article>
           ))}
         </div>
+      )}
+        </>
       )}
     </section>
   );
