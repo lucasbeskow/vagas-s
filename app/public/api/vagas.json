@@ -1,0 +1,90 @@
+[
+  {
+    "id": 1,
+    "company": "Vercel",
+    "role": "Full-stack Engineer",
+    "salary": "R$ 20k - 30k",
+    "workplaceType": "Remoto",
+    "type": "Efetivo",
+    "area": "Engenharia",
+    "publishedAt": "4h",
+    "description": "Desenvolvimento e evolução da infraestrutura frontend e edge network para aplicações web modernas."
+  },
+  {
+    "id": 2,
+    "company": "Nubank",
+    "role": "Senior Product Designer",
+    "salary": "R$ 16k - 24k",
+    "workplaceType": "Remoto",
+    "type": "Efetivo",
+    "area": "Design",
+    "publishedAt": "2h",
+    "description": "Liderança no design de fluxos de experiência do usuário para novos produtos financeiros digitais."
+  },
+  {
+    "id": 3,
+    "company": "SATC Labs",
+    "role": "Product Designer",
+    "salary": "R$ 8k - 12k",
+    "workplaceType": "Remoto",
+    "type": "Efetivo",
+    "area": "Design",
+    "publishedAt": "2d",
+    "description": "Pesquisa e interface do produto principal, criando experiências acessíveis e consistentes."
+  },
+  {
+    "id": 4,
+    "company": "Betha Sistemas",
+    "role": "Frontend Engineer (React & TypeScript)",
+    "salary": "R$ 9k - 14k",
+    "workplaceType": "Híbrido",
+    "type": "Efetivo",
+    "area": "Engenharia",
+    "publishedAt": "1d",
+    "description": "Construção de aplicações web de alta performance voltadas para soluções de gestão pública."
+  },
+  {
+    "id": 5,
+    "company": "Linear",
+    "role": "Engineering Manager (Platform)",
+    "salary": "R$ 32k - 42k",
+    "workplaceType": "Remoto",
+    "type": "Efetivo",
+    "area": "Gestão",
+    "publishedAt": "5h",
+    "description": "Gestão técnica de squads de infraestrutura e alinhamento de roadmap de produto em escala global."
+  },
+  {
+    "id": 6,
+    "company": "Rocketseat",
+    "role": "Estágio em Desenvolvimento Web Full-stack",
+    "salary": "R$ 2.5k",
+    "workplaceType": "Remoto",
+    "type": "Estágio",
+    "area": "Engenharia",
+    "publishedAt": "6h",
+    "description": "Apoio no desenvolvimento de funcionalidades para a plataforma de educação e comunidade tech."
+  },
+  {
+    "id": 7,
+    "company": "QuintoAndar",
+    "role": "Design System Intern",
+    "salary": "R$ 3k",
+    "workplaceType": "Híbrido",
+    "type": "Estágio",
+    "area": "Design",
+    "publishedAt": "1d",
+    "description": "Documentação e suporte aos componentes de design system para produtos web e mobile."
+  },
+  {
+    "id": 8,
+    "company": "Brex",
+    "role": "Product Operations Lead (Fintech)",
+    "salary": "R$ 15k - 20k",
+    "workplaceType": "Presencial",
+    "type": "Temporário",
+    "area": "Gestão",
+    "publishedAt": "2d",
+    "description": "Otimização de processos operacionais e suporte a lançamentos estratégicos de novas contas corporativas."
+  }
+]
